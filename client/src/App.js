@@ -24,7 +24,6 @@ import {
   Button,
   Box,
   CssBaseline,
-
 } from "@mui/material";
 
 const questions = [
@@ -44,7 +43,6 @@ const questions = [
 ];
 const instructors = ["Dr. NAMANE R"];
 const modules = ["EE121 Algorithmic [FALL 2022]"];
-
 
 function App() {
   const initialData = {
@@ -69,11 +67,12 @@ function App() {
   };
 
   const [formdata, setFormData] = React.useState(initialData);
-  const[err,setErr]=React.useState(false); 
-  const [clicked,setClicked]=React.useState(false);
+  const [err, setErr] = React.useState(false);
+  const [clicked, setClicked] = React.useState(false);
   const clickhandler = () => {
     setClicked(true);
-    const {  instructor_name,
+    const {
+      instructor_name,
       module,
       an1,
       an2,
@@ -90,38 +89,39 @@ function App() {
       an13,
       student_effort,
       student_work,
-      message} =formdata; 
-      if (
-        instructor_name &&
-        module &&
-        an1 &&
-        an2 &&
-        an3 &&
-        an4 &&
-        an5 &&
-        an6 &&
-        an7 &&
-        an8 &&
-        an9 &&
-        an10 &&
-        an11 &&
-        an12 &&
-        an13 &&
-        student_effort && student_work
-      ){
-        console.log(formdata);
-           setErr(false)
-           Axios.post("http://localhost:3001/api/insert", {
-             formdata,
-           });
-      }
-      else {
-        console.log("misssed filed")
-        setErr(true)
-      }
-      
-   
-
+      message,
+    } = formdata;
+    if (
+      instructor_name &&
+      module &&
+      an1 &&
+      an2 &&
+      an3 &&
+      an4 &&
+      an5 &&
+      an6 &&
+      an7 &&
+      an8 &&
+      an9 &&
+      an10 &&
+      an11 &&
+      an12 &&
+      an13 &&
+      student_effort &&
+      student_work
+    ) {
+      console.log(formdata);
+      setErr(false);
+      Axios.post(
+        "https://course-evaluation-server-production.up.railway.app/api/insert",
+        {
+          formdata,
+        }
+      );
+    } else {
+      console.log("misssed filed");
+      setErr(true);
+    }
   };
 
   return (
@@ -168,79 +168,71 @@ function App() {
                 Please evaluate honestly
               </Typography>
               <TableContainer component={Paper}>
-                  
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead></TableHead>
-                    <TableBody>
-                      {questions.map((question, index) => (
-                        <TableRow
-                          key={index}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead></TableHead>
+                  <TableBody>
+                    {questions.map((question, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          sx={{ fontSize: "14px", padding: "10px" }}
                         >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            sx={{ fontSize: "14px", padding: "10px" }}
-                          >
-                            {question}
-                          </TableCell>
+                          {question}
+                        </TableCell>
 
-                          <TableCell align="right" sx={{ padding: "10px" }}>
-                            <FormControl required>
-                              <RadioGroup
-                                row
-                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                name="row-radio-buttons-group"
-                                onChange={(e) =>
-                                  (formdata[`an${index + 1}`] = e.target.value)
+                        <TableCell align="right" sx={{ padding: "10px" }}>
+                          <FormControl required>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-row-radio-buttons-group-label"
+                              name="row-radio-buttons-group"
+                              onChange={(e) =>
+                                (formdata[`an${index + 1}`] = e.target.value)
+                              }
+                            >
+                              <FormControlLabel
+                                value="Excellent"
+                                control={<Radio />}
+                                label={
+                                  <Typography variant="body2">
+                                    Excellent
+                                  </Typography>
                                 }
-                              >
-                                <FormControlLabel
-                                  value="Excellent"
-                                  control={<Radio />}
-                                  label={
-                                    <Typography variant="body2">
-                                      Excellent
-                                    </Typography>
-                                  }
-                                />
-                                <FormControlLabel
-                                  value="Good"
-                                  control={<Radio />}
-                                  label={
-                                    <Typography variant="body2">
-                                      Good
-                                    </Typography>
-                                  }
-                                />
-                                <FormControlLabel
-                                  value="Fair"
-                                  control={<Radio />}
-                                  label={
-                                    <Typography variant="body2">
-                                      Fair
-                                    </Typography>
-                                  }
-                                />
-                                <FormControlLabel
-                                  value="Poor"
-                                  control={<Radio />}
-                                  label={
-                                    <Typography variant="body2">
-                                      Poor
-                                    </Typography>
-                                  }
-                                />
-                              </RadioGroup>
-                            </FormControl>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-              
+                              />
+                              <FormControlLabel
+                                value="Good"
+                                control={<Radio />}
+                                label={
+                                  <Typography variant="body2">Good</Typography>
+                                }
+                              />
+                              <FormControlLabel
+                                value="Fair"
+                                control={<Radio />}
+                                label={
+                                  <Typography variant="body2">Fair</Typography>
+                                }
+                              />
+                              <FormControlLabel
+                                value="Poor"
+                                control={<Radio />}
+                                label={
+                                  <Typography variant="body2">Poor</Typography>
+                                }
+                              />
+                            </RadioGroup>
+                          </FormControl>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </TableContainer>
             </Box>
             <Typography variant="h5" sx={{ margin: "20px 0" }}>
